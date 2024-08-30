@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Podcast</string>
+    <string name="title_home">Home</string>
+    <string name="title_details">Detalhes</string>
+    <string name="title_player">Player</string>
+</resources>
