@@ -7,6 +7,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Repository implementation for fetching RSS feed.
+ *
+ * @property call: Call<Feed>? The call object for the request.
+ * @constructor Creates a new instance of RssRepositoryImpl.
+ */
 class RssRepositoryImpl: RssRepository {
     private var call: Call<Feed>?=null
 
