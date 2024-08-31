@@ -33,6 +33,9 @@ class HomeViewModel(
         return uiState
     }
 
+    /**
+     * Refresh UI State with new Histories.
+     */
     private suspend fun refreshHistoriesList() {
         uiState.postValue(UiState(getHistoriesUseCase.invoke()))
     }
@@ -42,6 +45,12 @@ class HomeViewModel(
      */
     data class UiState(val historyItemList: List<HistoryItem>)
 
+    /**
+     * Check if the link is a valid RSS link.
+     *
+     * @param link: The link you wanna check if is a valid RSS link.
+     * @return true if the link is a valid RSS link, false otherwise.
+     */
     fun checkRssLink(link: String): Boolean {
         addHistory(link, link)
         return true
@@ -60,6 +69,11 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Delete all Histories.
+     *
+     * This will delete all Histories from the database.
+     */
     fun deleteAllHistory() {
         viewModelScope.launch {
             getHistoriesUseCase.deleteAll()

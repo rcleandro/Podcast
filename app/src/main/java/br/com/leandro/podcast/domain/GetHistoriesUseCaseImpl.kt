@@ -4,6 +4,12 @@ import android.util.Log
 import br.com.leandro.podcast.core.repository.HistoryRepository
 import br.com.leandro.podcast.model.HistoryItem
 
+/**
+ * Use case responsible for fetching all histories.
+ *
+ * @param historyRepository Repository responsible for handling history data.
+ * @constructor Creates a GetHistoriesUseCaseImpl.
+ */
 class GetHistoriesUseCaseImpl(
     private val historyRepository: HistoryRepository
 ) : GetHistoriesUseCase {

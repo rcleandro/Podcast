@@ -6,6 +6,12 @@ import br.com.leandro.podcast.core.database.entity.History
 import br.com.leandro.podcast.core.model.HistoryDomain
 import java.util.UUID
 
+/**
+ * Implementation of [HistoryRepository].
+ *
+ * @param appDatabase Database instance.
+ * @constructor Creates a HistoryRepositoryImpl.
+ */
 class HistoryRepositoryImpl(appDatabase: AppDatabase) : HistoryRepository {
 
     private val dao = appDatabase.historyDao()

@@ -82,6 +82,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Navigate to Details Screen.
+     *
+     * @param history: The HistoryItem to be shown in Details Screen.
+     */
     private fun navigateToDetails(history: HistoryItem) {
         val bundle = Bundle().apply {
             putSerializable("history", history)

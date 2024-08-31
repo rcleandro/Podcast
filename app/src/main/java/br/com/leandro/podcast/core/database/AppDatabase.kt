@@ -7,6 +7,12 @@ import androidx.room.RoomDatabase
 import br.com.leandro.podcast.core.database.dao.HistoryDao
 import br.com.leandro.podcast.core.database.entity.History
 
+/**
+ * The Room database for this app
+ *
+ * This class represents the database itself. It is an abstract class that extends RoomDatabase and
+ * has a companion object that provides a getInstance method to get the database instance.
+ */
 @Database(entities = [History::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
