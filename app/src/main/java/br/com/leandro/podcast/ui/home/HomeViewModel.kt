@@ -1,17 +1,24 @@
 package br.com.leandro.podcast.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.leandro.podcast.domain.GetHistoriesUseCase
+import br.com.leandro.podcast.model.Feed
 import br.com.leandro.podcast.model.HistoryItem
+import br.com.leandro.podcast.network.OperationCallback
+import br.com.leandro.podcast.repository.RssRepositoryImpl
+import br.com.leandro.podcast.utils.toUrl
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getHistoriesUseCase: GetHistoriesUseCase
 ) : ViewModel() {
+
+    private val repository = RssRepositoryImpl()
 
     private val uiState: MutableLiveData<UiState> by lazy {
         MutableLiveData<UiState>(UiState(historyItemList = emptyList()))
@@ -52,7 +59,22 @@ class HomeViewModel(
      * @return true if the link is a valid RSS link, false otherwise.
      */
     fun checkRssLink(link: String): Boolean {
-        addHistory(link, link)
+        viewModelScope.launch {
+            val url = link.toUrl()
+            Log.d("HomeViewModel", "Fetching RSS feed from URL: $url")
+
+            repository.fetchFeed(url, object : OperationCallback<Feed> {
+                override fun onSuccess(data: Feed) {
+                    addHistory(data.channelTitle ?: link, link)
+                    Log.d("HomeViewModel", "Channel Title: ${data.channelTitle}")
+                }
+
+                override fun onError(error: String?) {
+                    Log.e("HomeViewModelHomeViewModel", "Error: $error")
+                }
+            })
+        }
+
         return true
     }
 
