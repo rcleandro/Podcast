@@ -7,4 +7,7 @@
     <string name="add_rss_link">Adicione um link RSS</string>
     <string name="history">Histórico:</string>
     <string name="delete_all">Apagar tudo</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="do_you_want_to_delete_history">Deseja excluir histórico?</string>
 </resources>

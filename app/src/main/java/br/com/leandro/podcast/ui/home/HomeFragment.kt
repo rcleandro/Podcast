@@ -1,11 +1,17 @@
 package br.com.leandro.podcast.ui.home
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -72,7 +78,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.imageViewDeleteAll.setOnClickListener {
-            viewModel.deleteAllHistory()
+            onDeleteButtonClicked()
         }
     }
 
@@ -82,6 +88,34 @@ class HomeFragment : Fragment() {
         }
 
         findNavController().navigate(R.id.action_navigation_home_to_navigation_details, bundle)
+    }
+
+    /**
+     * Delete all histories.
+     *
+     * Show a dialog to confirm the action.
+     */
+    private fun onDeleteButtonClicked() {
+        val alert = Dialog(requireContext(), R.style.dialogTheme)
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        alert.setContentView(R.layout.delete_dialog_view)
+        activity?.window?.setLayout(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+
+        val buttonYes: Button = alert.findViewById(R.id.buttonYes)
+        val buttonNo: Button = alert.findViewById(R.id.buttonNo)
+
+        alert.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alert.show()
+
+        buttonYes.setOnClickListener {
+            alert.dismiss()
+
+            viewModel.deleteAllHistory()
+        }
+        buttonNo.setOnClickListener { alert.dismiss() }
     }
 
     /**
