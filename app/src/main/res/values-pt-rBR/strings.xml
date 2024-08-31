@@ -6,4 +6,5 @@
     <string name="title_player">Player</string>
     <string name="add_rss_link">Adicione um link RSS</string>
     <string name="history">Histórico:</string>
+    <string name="delete_all">Apagar tudo</string>
 </resources>

@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/text_view_history"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/simple_margin"
         android:layout_marginTop="@dimen/vertical_margin"
@@ -38,9 +38,22 @@
         android:text="@string/history"
         android:textAlignment="viewStart"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_delete_all"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_input_layout" />
+
+    <ImageView
+        android:id="@+id/image_view_delete_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vertical_margin"
+        android:layout_marginEnd="@dimen/vertical_margin"
+        android:padding="@dimen/simple_padding"
+        android:contentDescription="@string/delete_all"
+        android:src="@drawable/ic_delete_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_view_history" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

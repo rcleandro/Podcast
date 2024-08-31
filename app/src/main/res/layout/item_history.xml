@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/simple_margin"
     android:background="@drawable/bg_item_history"
-    android:paddingTop="@dimen/simple_margin"
-    android:paddingBottom="@dimen/simple_margin">
+    android:paddingTop="@dimen/simple_padding"
+    android:paddingBottom="@dimen/simple_padding">
 
     <TextView
         android:id="@+id/text_view_history_title"

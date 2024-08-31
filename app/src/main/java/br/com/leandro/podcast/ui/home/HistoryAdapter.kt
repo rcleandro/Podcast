@@ -6,18 +6,19 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.leandro.podcast.databinding.ItemHistoryBinding
+import br.com.leandro.podcast.model.HistoryItem
 
 /**
  * RecyclerView adapter for displaying a list of Histories.
  *
  * The UI is based on the [HistoryAdapter].
- * We use the [String] as a model for the binding.
+ * We use the [HistoryItem] as a model for the binding.
  */
 class HistoryAdapter(
-    private val onItemClicked: (String) -> Unit
+    private val onItemClicked: (HistoryItem) -> Unit,
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
-    private val asyncListDiffer: AsyncListDiffer<String> = AsyncListDiffer(this, DiffCallback)
+    private val asyncListDiffer: AsyncListDiffer<HistoryItem> = AsyncListDiffer(this, DiffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -31,17 +32,17 @@ class HistoryAdapter(
 
     override fun getItemCount(): Int = asyncListDiffer.currentList.size
 
-    fun updateHistories(histories: List<String>) {
+    fun updateHistories(histories: List<HistoryItem>) {
         asyncListDiffer.submitList(histories)
     }
 
     class ViewHolder(
         private val binding: ItemHistoryBinding,
-        private val onItemClicked: (String) -> Unit
+        private val onItemClicked: (HistoryItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(history: String) {
-            binding.textViewHistoryTitle.text = history
+        fun bind(history: HistoryItem) {
+            binding.textViewHistoryTitle.text = history.title
 
             binding.root.setOnClickListener {
                 onItemClicked(history)
@@ -49,14 +50,14 @@ class HistoryAdapter(
         }
     }
 
-    object DiffCallback : DiffUtil.ItemCallback<String>() {
+    object DiffCallback : DiffUtil.ItemCallback<HistoryItem>() {
 
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+        override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
+            return oldItem.id == newItem.id
         }
     }
 }
