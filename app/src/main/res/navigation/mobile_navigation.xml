@@ -9,13 +9,23 @@
         android:id="@+id/navigation_home"
         android:name="br.com.leandro.podcast.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_details"
+            app:destination="@id/navigation_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_details"
         android:name="br.com.leandro.podcast.ui.details.DetailsFragment"
         android:label="@string/title_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+
+        <action
+            android:id="@+id/action_navigation_details_to_navigation_player"
+            app:destination="@id/navigation_player" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_player"
