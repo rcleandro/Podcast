@@ -9,9 +9,11 @@ import androidx.lifecycle.viewModelScope
 import br.com.leandro.podcast.domain.GetHistoriesUseCase
 import br.com.leandro.podcast.model.Feed
 import br.com.leandro.podcast.model.HistoryItem
+import br.com.leandro.podcast.model.Podcast
+import br.com.leandro.podcast.model.ResponseClass
 import br.com.leandro.podcast.network.OperationCallback
 import br.com.leandro.podcast.repository.RssRepositoryImpl
-import br.com.leandro.podcast.utils.toUrl
+import br.com.leandro.podcast.utils.toRssUrl
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -26,6 +28,9 @@ class HomeViewModel(
 
     private val _feed = MutableLiveData<Feed>()
     val feed: LiveData<Feed> = _feed
+
+    private val _podcastList = MutableLiveData<List<Podcast>>()
+    val podcastList: LiveData<List<Podcast>> = _podcastList
 
     /**
      * Refresh UI State whenever View Resumes.
@@ -61,18 +66,19 @@ class HomeViewModel(
      * @param link: The link you wanna check if is a valid RSS link.
      * @return true if the link is a valid RSS link, false otherwise.
      */
-    fun checkRssLink(link: String, addHistory: Boolean = false): Feed? {
+    fun checkRssLink(link: String, addHistory: Boolean = false) {
         viewModelScope.launch {
-            val url = link.toUrl()
+            val url = link.toRssUrl()
             Log.d("HomeViewModel", "Fetching RSS feed from URL: $url")
 
-            repository.fetchFeed(url, object : OperationCallback<Feed> {
-                override fun onSuccess(data: Feed) {
+            repository.fetchFeed(url, object : OperationCallback<ResponseClass> {
+                override fun onSuccess(data: ResponseClass) {
                     if (addHistory)
-                        addHistory(data.channelTitle ?: link, link)
+                        addHistory(data.feed.title, link)
 
-                    _feed.postValue(data)
-                    Log.d("HomeViewModel", "Channel Title: ${data.channelTitle}")
+                    _podcastList.postValue(data.podcastList)
+                    _feed.postValue(data.feed)
+                    Log.d("HomeViewModel", "Channel Title: ${data.feed.title}")
                 }
 
                 override fun onError(error: String?) {
@@ -80,8 +86,6 @@ class HomeViewModel(
                 }
             })
         }
-
-        return null
     }
 
     /**

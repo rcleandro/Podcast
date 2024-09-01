@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/simple_margin"
-    android:background="@drawable/bg_item_history"
-    android:paddingTop="@dimen/simple_padding"
-    android:paddingBottom="@dimen/simple_padding">
+    android:background="@drawable/bg_item_history">
 
     <TextView
         android:id="@+id/text_view_podcast_title"
@@ -20,7 +18,7 @@
         android:textAlignment="viewStart"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/image_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Podcast example" />
@@ -28,25 +26,38 @@
     <TextView
         android:id="@+id/text_view_description"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/simple_margin"
-        android:layout_marginTop="@dimen/simple_margin"
-        android:layout_marginEnd="@dimen/simple_margin"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/simple_margin"
         android:textAlignment="viewStart"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_view"
+        android:textSize="12sp"
+        android:maxLines="5"
+        android:ellipsize="end"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_podcast_title"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_duration"
         tools:text="This is a description example, this is a description example, this is a description example, this is a description example, this is a description example," />
+
+    <TextView
+        android:id="@+id/text_view_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/simple_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="11sp"
+        android:maxLines="1"
+        tools:text="2:59" />
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_margin="@dimen/simple_margin"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/podcast_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_podcast_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

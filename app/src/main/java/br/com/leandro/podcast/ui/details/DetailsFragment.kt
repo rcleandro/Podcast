@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.leandro.podcast.MainViewModel
+import br.com.leandro.podcast.R
 import br.com.leandro.podcast.databinding.FragmentDetailsBinding
+import com.squareup.picasso.Picasso
 
 class DetailsFragment : Fragment() {
 
@@ -40,9 +42,18 @@ class DetailsFragment : Fragment() {
 
         // Observe Feed for changes.
         mainViewModel.feed.observe(viewLifecycleOwner) { feed ->
-            binding.textViewTitle.text = feed.channelTitle
-            binding.textViewDescription.text = feed.channelDescription
-            feed.podcastList?.let { adapter.updatePodcasts(it) }
+            binding.textViewTitle.text = feed.title
+            binding.textViewDescription.text = feed.description
+
+            Picasso.get()
+                .load(feed.image)
+                .placeholder(R.drawable.ic_placeholder_24dp)
+                .into(binding.imageView)
+        }
+
+        // Observe PodcastList for changes.
+        mainViewModel.podcastList.observe(viewLifecycleOwner) { podcastList ->
+            adapter.updatePodcasts(podcastList)
         }
     }
 

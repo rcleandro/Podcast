@@ -1,6 +1,7 @@
 package br.com.leandro.podcast.ui.home
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,7 +13,6 @@ import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,7 +25,9 @@ import br.com.leandro.podcast.core.repository.HistoryRepositoryImpl
 import br.com.leandro.podcast.databinding.FragmentHomeBinding
 import br.com.leandro.podcast.domain.GetHistoriesUseCaseImpl
 import br.com.leandro.podcast.model.Feed
+import br.com.leandro.podcast.model.Podcast
 import br.com.leandro.podcast.utils.hideKeyboard
+import java.io.File
 
 class HomeFragment : Fragment() {
 
@@ -76,7 +78,7 @@ class HomeFragment : Fragment() {
         // Observe Feed for changes.
         viewModel.feed.observe(viewLifecycleOwner) {
             it?.let { feed ->
-                navigateToDetails(feed)
+                navigateToDetails(feed, viewModel.podcastList.value ?: emptyList())
             }
         }
 
@@ -102,8 +104,9 @@ class HomeFragment : Fragment() {
      *
      * @param feed: The Feed to be shown in Details Screen.
      */
-    private fun navigateToDetails(feed: Feed) {
+    private fun navigateToDetails(feed: Feed, podcastList: List<Podcast>) {
         mainViewModel.setFeed(feed)
+        mainViewModel.setPodcastList(podcastList)
         findNavController().navigate(R.id.action_navigation_home_to_navigation_details)
     }
 
@@ -131,6 +134,7 @@ class HomeFragment : Fragment() {
             alert.dismiss()
 
             viewModel.deleteAllHistory()
+            requireContext().clearPicassoDiskCache()
         }
         buttonNo.setOnClickListener { alert.dismiss() }
     }
@@ -142,6 +146,16 @@ class HomeFragment : Fragment() {
      */
     private fun bindUiState(uiState: HomeViewModel.UiState) {
         adapter.updateHistories(uiState.historyItemList)
+    }
+
+    /**
+     * Clear Custom Picasso Cache.
+     */
+    private fun Context.clearPicassoDiskCache() {
+        val cacheDir = File(cacheDir, "picasso-cache")
+        if (cacheDir.exists()) {
+            cacheDir.deleteRecursively()
+        }
     }
 
     override fun onDestroyView() {

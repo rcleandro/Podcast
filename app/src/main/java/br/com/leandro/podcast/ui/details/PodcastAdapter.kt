@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import br.com.leandro.podcast.R
 import br.com.leandro.podcast.databinding.ItemPodcastBinding
 import br.com.leandro.podcast.model.Podcast
+import br.com.leandro.podcast.utils.htmlTextToString
+import br.com.leandro.podcast.utils.toDurationTime
+import com.squareup.picasso.Picasso
 
 class PodcastAdapter(
     private val onItemClicked: (Podcast) -> Unit,
@@ -36,8 +40,16 @@ class PodcastAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(podcast: Podcast) {
-            binding.textViewPodcastTitle.text = podcast.title
-            binding.textViewDescription.text = podcast.description
+            binding.textViewPodcastTitle.text = podcast.title.htmlTextToString()
+            binding.textViewDescription.text = podcast.description.htmlTextToString()
+            binding.textViewDuration.text = podcast.enclosure.duration.toDurationTime()
+
+            if (podcast.thumbnail.isNotEmpty()) {
+                Picasso.get()
+                    .load(podcast.thumbnail)
+                    .placeholder(R.drawable.ic_details_black_24dp)
+                    .into(binding.imageView)
+            }
 
             binding.root.setOnClickListener {
                 onItemClicked(podcast)

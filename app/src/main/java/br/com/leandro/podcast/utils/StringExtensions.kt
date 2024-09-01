@@ -1,11 +1,13 @@
 package br.com.leandro.podcast.utils
 
+import android.text.Html
+
 /**
  * Convert a String to a valid URL.
  *
  * @return a valid URL.
  */
-fun String.toUrl(): String {
+fun String.toRssUrl(): String {
     var result = this.trim()
 
     if (result.startsWith("http://", ignoreCase = true)) {
@@ -21,4 +23,8 @@ fun String.toUrl(): String {
     }
 
     return result
+}
+
+fun String.htmlTextToString(): String {
+    return Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT).toString()
 }
