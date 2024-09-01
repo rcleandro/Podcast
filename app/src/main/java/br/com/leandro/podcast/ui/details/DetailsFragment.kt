@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.leandro.podcast.MainViewModel
 import br.com.leandro.podcast.R
 import br.com.leandro.podcast.databinding.FragmentDetailsBinding
+import br.com.leandro.podcast.model.Podcast
+import br.com.leandro.podcast.utils.htmlTextToString
 import com.squareup.picasso.Picasso
 
 class DetailsFragment : Fragment() {
@@ -28,7 +31,7 @@ class DetailsFragment : Fragment() {
         val root: View = binding.root
 
         adapter = PodcastAdapter { podcast ->
-
+            navigateToPlayer(podcast)
         }
 
         return root
@@ -42,8 +45,8 @@ class DetailsFragment : Fragment() {
 
         // Observe Feed for changes.
         mainViewModel.feed.observe(viewLifecycleOwner) { feed ->
-            binding.textViewTitle.text = feed.title
-            binding.textViewDescription.text = feed.description
+            binding.textViewTitle.text = feed.title.htmlTextToString()
+            binding.textViewDescription.text = feed.description.htmlTextToString()
 
             Picasso.get()
                 .load(feed.image)
@@ -55,6 +58,16 @@ class DetailsFragment : Fragment() {
         mainViewModel.podcastList.observe(viewLifecycleOwner) { podcastList ->
             adapter.updatePodcasts(podcastList)
         }
+    }
+
+    /**
+     * Navigate to Player Screen.
+     *
+     * @param podcast Podcast
+     */
+    private fun navigateToPlayer(podcast: Podcast) {
+        mainViewModel.setPodcast(podcast)
+        findNavController().navigate(R.id.action_navigation_details_to_navigation_player)
     }
 
     override fun onDestroyView() {

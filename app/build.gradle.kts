@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.squareup.picasso)
+    implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)

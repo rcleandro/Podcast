@@ -11,4 +11,8 @@
     <string name="no">Não</string>
     <string name="do_you_want_to_delete_history">Deseja excluir histórico?</string>
     <string name="podcast_image">Image do podcast</string>
+    <string name="description">Descrição:</string>
+    <string name="previous">Anterior</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="next">Próximo</string>
 </resources>
