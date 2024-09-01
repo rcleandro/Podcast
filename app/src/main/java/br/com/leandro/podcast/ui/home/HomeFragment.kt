@@ -12,16 +12,19 @@ import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.leandro.podcast.MainViewModel
 import br.com.leandro.podcast.R
 import br.com.leandro.podcast.core.database.AppDatabase
 import br.com.leandro.podcast.core.repository.HistoryRepositoryImpl
 import br.com.leandro.podcast.databinding.FragmentHomeBinding
 import br.com.leandro.podcast.domain.GetHistoriesUseCaseImpl
-import br.com.leandro.podcast.model.HistoryItem
+import br.com.leandro.podcast.model.Feed
 import br.com.leandro.podcast.utils.hideKeyboard
 
 class HomeFragment : Fragment() {
@@ -34,6 +37,7 @@ class HomeFragment : Fragment() {
         val getHistoriesUseCase = GetHistoriesUseCaseImpl(historyRepository = historyRepository)
         HomeViewModel.Factory(getHistoriesUseCase = getHistoriesUseCase)
     }
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var adapter: HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +45,7 @@ class HomeFragment : Fragment() {
 
         lifecycle.addObserver(HistoryListLifecycleObserver(viewModel))
         adapter = HistoryAdapter { history ->
-            navigateToDetails(history)
+            viewModel.checkRssLink(history.link)
         }
     }
 
@@ -69,11 +73,22 @@ class HomeFragment : Fragment() {
             binding.textInput.hideKeyboard()
         }
 
+        // Observe Feed for changes.
+        viewModel.feed.observe(viewLifecycleOwner) {
+            it?.let { feed ->
+                navigateToDetails(feed)
+            }
+        }
+
         // Set TextInput Action Listener
         binding.textInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                viewModel.checkRssLink(binding.textInput.text.toString())
+                viewModel.checkRssLink(
+                    link = binding.textInput.text.toString(),
+                    addHistory = true
+                )
+                true
             } else false
         }
 
@@ -85,14 +100,11 @@ class HomeFragment : Fragment() {
     /**
      * Navigate to Details Screen.
      *
-     * @param history: The HistoryItem to be shown in Details Screen.
+     * @param feed: The Feed to be shown in Details Screen.
      */
-    private fun navigateToDetails(history: HistoryItem) {
-        val bundle = Bundle().apply {
-            putSerializable("history", history)
-        }
-
-        findNavController().navigate(R.id.action_navigation_home_to_navigation_details, bundle)
+    private fun navigateToDetails(feed: Feed) {
+        mainViewModel.setFeed(feed)
+        findNavController().navigate(R.id.action_navigation_home_to_navigation_details)
     }
 
     /**

@@ -14,4 +14,4 @@ data class HistoryItem(
     val id: String,
     val title: String,
     val link: String
-): Serializable
+)

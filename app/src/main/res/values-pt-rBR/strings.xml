@@ -10,4 +10,5 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="do_you_want_to_delete_history">Deseja excluir histórico?</string>
+    <string name="podcast_image">Image do podcast</string>
 </resources>

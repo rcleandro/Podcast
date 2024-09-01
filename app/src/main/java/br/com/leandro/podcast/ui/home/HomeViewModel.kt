@@ -24,6 +24,9 @@ class HomeViewModel(
         MutableLiveData<UiState>(UiState(historyItemList = emptyList()))
     }
 
+    private val _feed = MutableLiveData<Feed>()
+    val feed: LiveData<Feed> = _feed
+
     /**
      * Refresh UI State whenever View Resumes.
      */
@@ -58,14 +61,17 @@ class HomeViewModel(
      * @param link: The link you wanna check if is a valid RSS link.
      * @return true if the link is a valid RSS link, false otherwise.
      */
-    fun checkRssLink(link: String): Boolean {
+    fun checkRssLink(link: String, addHistory: Boolean = false): Feed? {
         viewModelScope.launch {
             val url = link.toUrl()
             Log.d("HomeViewModel", "Fetching RSS feed from URL: $url")
 
             repository.fetchFeed(url, object : OperationCallback<Feed> {
                 override fun onSuccess(data: Feed) {
-                    addHistory(data.channelTitle ?: link, link)
+                    if (addHistory)
+                        addHistory(data.channelTitle ?: link, link)
+
+                    _feed.postValue(data)
                     Log.d("HomeViewModel", "Channel Title: ${data.channelTitle}")
                 }
 
@@ -75,7 +81,7 @@ class HomeViewModel(
             })
         }
 
-        return true
+        return null
     }
 
     /**

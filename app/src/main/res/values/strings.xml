@@ -10,4 +10,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="do_you_want_to_delete_history">Do you want to delete history?</string>
+    <string name="podcast_image">Podcast image</string>
 </resources>
