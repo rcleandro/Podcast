@@ -2,6 +2,7 @@ package br.com.leandro.podcast.model
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Namespace
+import org.simpleframework.xml.Path
 import org.simpleframework.xml.Root
 
 @Root(name = "item", strict = false)
@@ -12,10 +13,10 @@ data class Podcast @JvmOverloads constructor (
      *
      * @param title the title to set
      */
-    @field:Element(name = "itunes:title", required = false)
-    @param:Element(name = "itunes:title", required = false)
-    @field:Namespace(prefix = "itunes", reference = "http://www.itunes.com/dtds/podcast-1.0.dtd")
-    @param:Namespace(prefix = "itunes", reference = "http://www.itunes.com/dtds/podcast-1.0.dtd")
+    @field:Element(name = "title", required = false)
+    @param:Element(name = "title", required = false)
+    @field:Path("item")
+    @param:Path("item")
     var title: String? = null,
 
     /**
