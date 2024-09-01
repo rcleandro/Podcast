@@ -83,6 +83,7 @@ class PlayerFragment : Fragment(), Player.Listener {
             val podcastList = mainViewModel.podcastList.value ?: emptyList()
             if ( currentEpisodeIndex < podcastList.size - 1) {
                 mainViewModel.setPodcast(podcastList[currentEpisodeIndex + 1])
+                mainViewModel.setMediaCurrentPosition(0)
             }
         }
 
@@ -91,6 +92,7 @@ class PlayerFragment : Fragment(), Player.Listener {
             if (currentEpisodeIndex > 0) {
                 val podcastList = mainViewModel.podcastList.value ?: emptyList()
                 mainViewModel.setPodcast(podcastList[currentEpisodeIndex - 1])
+                mainViewModel.setMediaCurrentPosition(0)
             }
         }
 
