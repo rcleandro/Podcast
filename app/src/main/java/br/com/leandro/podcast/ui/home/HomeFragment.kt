@@ -13,6 +13,7 @@ import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -52,6 +53,7 @@ class HomeFragment : Fragment() {
 
         lifecycle.addObserver(HistoryListLifecycleObserver(viewModel))
         adapter = HistoryAdapter { history ->
+            mainViewModel.setUpdating(true)
             viewModel.checkRssLink(history.link)
         }
     }
@@ -83,6 +85,7 @@ class HomeFragment : Fragment() {
         // Observe Feed for changes.
         viewModel.feed.observe(viewLifecycleOwner) {
             it?.let { feed ->
+                mainViewModel.setUpdating(false)
                 navigateToDetails(feed, viewModel.podcastList.value ?: emptyList())
             }
         }
@@ -91,12 +94,24 @@ class HomeFragment : Fragment() {
         binding.textInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                mainViewModel.setUpdating(true)
                 viewModel.checkRssLink(
                     link = binding.textInput.text.toString(),
                     addHistory = true
                 )
                 true
             } else false
+        }
+
+        // Observe Error for changes.
+        viewModel.error.observe(viewLifecycleOwner) {
+            if (it) {
+                mainViewModel.setUpdating(false)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.invalid_rss_link), Toast.LENGTH_LONG
+                ).show()
+            }
         }
 
         binding.imageViewDeleteAll.setOnClickListener {

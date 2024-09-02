@@ -12,6 +12,10 @@ import br.com.leandro.podcast.model.Podcast
  * ViewModel responsible for sharing data between fragments.
  */
 class MainViewModel: ViewModel() {
+
+    private val _updating = MutableLiveData<Boolean>().apply { value = false }
+    val updating: LiveData<Boolean> = _updating
+
     private val _feed = MutableLiveData<Feed>()
     val feed: LiveData<Feed> = _feed
 
@@ -26,6 +30,8 @@ class MainViewModel: ViewModel() {
 
     private val _mediaCurrentPosition = MutableLiveData<Long>()
     val mediaCurrentPosition: LiveData<Long> = _mediaCurrentPosition
+
+    fun setUpdating(updating: Boolean) = _updating.postValue(updating)
 
     fun setFeed(feed: Feed) = _feed.postValue(feed)
 

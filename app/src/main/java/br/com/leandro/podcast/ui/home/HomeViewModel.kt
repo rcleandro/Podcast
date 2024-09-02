@@ -37,6 +37,11 @@ class HomeViewModel(
     private val _podcastList = MutableLiveData<List<Podcast>>()
     val podcastList: LiveData<List<Podcast>> = _podcastList
 
+    private val _error = MutableLiveData<Boolean>().apply { value = false }
+    val error: LiveData<Boolean> = _error
+
+    fun setError(error: Boolean) = _error.postValue(error)
+
     /**
      * Refresh UI State whenever View Resumes.
      */
@@ -88,6 +93,7 @@ class HomeViewModel(
 
                 override fun onError(error: String?) {
                     Log.e("HomeViewModelHomeViewModel", "Error: $error")
+                    setError(true)
                 }
             })
         }

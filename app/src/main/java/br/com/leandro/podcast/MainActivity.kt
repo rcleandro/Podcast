@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
@@ -52,6 +53,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_details -> navigateToDetails()
                 R.id.navigation_player -> navigateToPlayer()
                 else -> false
+            }
+        }
+
+        // Observe updating for changes.
+        viewModel.updating.observe(this) { updating ->
+            if (updating) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         }
     }
