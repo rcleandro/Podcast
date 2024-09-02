@@ -17,4 +17,6 @@
     <string name="description">Description:</string>
     <string name="duration">Duration</string>
     <string name="authors">Author: %s</string>
+    <string name="select_an_rss_link">Select an RSS link!</string>
+    <string name="select_a_podcast_chapter">Select a podcast chapter!</string>
 </resources>

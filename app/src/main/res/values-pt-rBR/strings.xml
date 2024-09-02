@@ -17,4 +17,6 @@
     <string name="next">Próximo</string>
     <string name="duration">Duração</string>
     <string name="authors">Autores: %s</string>
+    <string name="select_an_rss_link">Selecione um link RSS!</string>
+    <string name="select_a_podcast_chapter">Selecione um capítulo do podcast!</string>
 </resources>
