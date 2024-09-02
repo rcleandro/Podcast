@@ -7,38 +7,89 @@
     android:layout_marginBottom="@dimen/margin_bottom"
     tools:context=".ui.player.PlayerFragment">
 
-    <TextView
-        android:id="@+id/text_view_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/simple_margin"
-        android:textAlignment="viewStart"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/image_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Podcast example" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/simple_margin"
-        android:layout_marginTop="@dimen/simple_margin"
-        android:layout_marginEnd="@dimen/simple_margin"
-        android:scrollbarSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_view"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_title">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_view_"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="viewStart"
-            android:textSize="14sp"
-            tools:text="This is a description example, this is a description example, this is a description example, this is a description example, this is a description example," />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/simple_margin"
+                android:textAlignment="viewStart"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Podcast example" />
+
+            <ImageView
+                android:id="@+id/image_view_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/simple_margin"
+                android:contentDescription="@string/duration"
+                android:src="@drawable/ic_time_12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_duration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_view_duration" />
+
+            <TextView
+                android:id="@+id/text_view_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/simple_margin"
+                android:maxLines="1"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/image_view_duration"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+                tools:text="32:59" />
+
+            <ImageView
+                android:id="@+id/image_view_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:contentDescription="@string/duration"
+                android:src="@drawable/ic_calendar_month_12dp"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_duration"
+                app:layout_constraintStart_toEndOf="@+id/text_view_duration"
+                app:layout_constraintTop_toTopOf="@id/text_view_duration" />
+
+            <TextView
+                android:id="@+id/text_view_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/simple_margin"
+                android:maxLines="1"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_duration"
+                app:layout_constraintStart_toEndOf="@+id/image_view_calendar"
+                app:layout_constraintTop_toTopOf="@id/text_view_duration"
+                tools:text="30/07/2024" />
+
+            <TextView
+                android:id="@+id/text_view_authors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/simple_margin"
+                android:textAlignment="viewStart"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_duration"
+                tools:text="Authors: Author example" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

@@ -17,6 +17,7 @@ import br.com.leandro.podcast.MainViewModel
 import br.com.leandro.podcast.R
 import br.com.leandro.podcast.databinding.FragmentPlayerBinding
 import br.com.leandro.podcast.utils.htmlTextToString
+import br.com.leandro.podcast.utils.toDateString
 import br.com.leandro.podcast.utils.toDurationTime
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -53,11 +54,17 @@ class PlayerFragment : Fragment(), Player.Listener {
         mainViewModel.podcast.observe(viewLifecycleOwner) { podcast ->
             binding.textViewTitle.text = podcast.title.htmlTextToString()
             binding.textViewDescription.text = podcast.description.htmlTextToString()
+            binding.textViewDuration.text = podcast.enclosure.duration.toDurationTime()
+            binding.textViewDate.text = podcast.pubDate.toDateString()
+            val authors = binding.root.resources.getString(R.string.authors, podcast.author)
+            binding.textViewAuthors.text = authors
 
-            Picasso.get()
-                .load(podcast.thumbnail)
-                .placeholder(R.drawable.ic_placeholder_24dp)
-                .into(binding.imageView)
+            if (podcast.thumbnail.isNotEmpty()) {
+                Picasso.get()
+                    .load(podcast.thumbnail)
+                    .placeholder(R.drawable.ic_placeholder_24dp)
+                    .into(binding.imageView)
+            }
 
             val currentEpisodeIndex = mainViewModel.podcastList.value?.indexOf(podcast) ?: 0
             mainViewModel.setMediaItemIndex(currentEpisodeIndex)
@@ -81,7 +88,7 @@ class PlayerFragment : Fragment(), Player.Listener {
         binding.btnNext.setOnClickListener {
             val currentEpisodeIndex = mainViewModel.mediaItemsIndex.value ?: 0
             val podcastList = mainViewModel.podcastList.value ?: emptyList()
-            if ( currentEpisodeIndex < podcastList.size - 1) {
+            if (currentEpisodeIndex < podcastList.size - 1) {
                 mainViewModel.setPodcast(podcastList[currentEpisodeIndex + 1])
                 mainViewModel.setMediaCurrentPosition(0)
             }
@@ -132,10 +139,20 @@ class PlayerFragment : Fragment(), Player.Listener {
                 super.onIsPlayingChanged(isPlaying)
                 if (isPlaying) {
                     startProgressBarUpdater()
-                    binding.btnPlayPause.setImageDrawable(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_pause_72dp))
+                    binding.btnPlayPause.setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_pause_72dp
+                        )
+                    )
                 } else {
                     progressUpdateJob?.cancel()
-                    binding.btnPlayPause.setImageDrawable(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_play_arrow_72dp))
+                    binding.btnPlayPause.setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_play_arrow_72dp
+                        )
+                    )
                 }
             }
 

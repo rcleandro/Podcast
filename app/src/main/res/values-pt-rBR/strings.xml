@@ -15,4 +15,6 @@
     <string name="previous">Anterior</string>
     <string name="play_pause">Play/Pause</string>
     <string name="next">Próximo</string>
+    <string name="duration">Duração</string>
+    <string name="authors">Autores: %s</string>
 </resources>

@@ -1,6 +1,8 @@
 package br.com.leandro.podcast.utils
 
 import android.text.Html
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * Convert a String to a valid URL.
@@ -27,4 +29,18 @@ fun String.toRssUrl(): String {
 
 fun String.htmlTextToString(): String {
     return Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT).toString()
+}
+
+fun String.toDateString(): String {
+    val formatCurrent = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val formatDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    try {
+        val date = formatCurrent.parse(this)
+        return date?.let { formatDate.format(it) } ?: ""
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+    return ""
 }

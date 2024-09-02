@@ -66,6 +66,7 @@ class DetailsFragment : Fragment() {
      * @param podcast Podcast
      */
     private fun navigateToPlayer(podcast: Podcast) {
+        mainViewModel.setMediaCurrentPosition(0)
         mainViewModel.setPodcast(podcast)
         findNavController().navigate(R.id.action_navigation_details_to_navigation_player)
     }

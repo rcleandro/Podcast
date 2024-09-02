@@ -9,6 +9,7 @@ import br.com.leandro.podcast.R
 import br.com.leandro.podcast.databinding.ItemPodcastBinding
 import br.com.leandro.podcast.model.Podcast
 import br.com.leandro.podcast.utils.htmlTextToString
+import br.com.leandro.podcast.utils.toDateString
 import br.com.leandro.podcast.utils.toDurationTime
 import com.squareup.picasso.Picasso
 
@@ -41,8 +42,11 @@ class PodcastAdapter(
 
         fun bind(podcast: Podcast) {
             binding.textViewPodcastTitle.text = podcast.title.htmlTextToString()
+            val authors = binding.root.resources.getString(R.string.authors, podcast.author)
+            binding.textViewAuthor.text = authors
             binding.textViewDescription.text = podcast.description.htmlTextToString()
             binding.textViewDuration.text = podcast.enclosure.duration.toDurationTime()
+            binding.textViewDate.text = podcast.pubDate.toDateString()
 
             if (podcast.thumbnail.isNotEmpty()) {
                 Picasso.get()
