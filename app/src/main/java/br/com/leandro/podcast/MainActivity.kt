@@ -56,11 +56,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Navigate to Home.
+     *
+     * @return true if the navigation was successful, false otherwise.
+     */
     private fun navigateToHome(): Boolean {
         navController.navigate(R.id.navigation_home)
         return true
     }
 
+    /**
+     * Navigate to Details.
+     *
+     * @return true if the navigation was successful, false otherwise.
+     * If false, show notification to select an RSS link.
+     */
     private fun navigateToDetails(): Boolean {
         return viewModel.feed.value?.let {
             navController.navigate(R.id.navigation_details)
@@ -71,6 +82,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Navigate to Player.
+     *
+     * @return true if the navigation was successful, false otherwise.
+     * If false, show notification to select an RSS link or a podcast chapter.
+     */
     private fun navigateToPlayer(): Boolean {
         return when {
             viewModel.feed.value == null -> {
@@ -88,6 +105,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Show Dialog.
+     *
+     * @param text: The text to be shown in the dialog.
+     */
     private fun onShowDialog(text: String) {
         val alert = Dialog(this, R.style.dialogTheme)
         alert.requestWindowFeature(Window.FEATURE_NO_TITLE)
