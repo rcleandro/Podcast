@@ -15,6 +15,11 @@ import br.com.leandro.podcast.model.Podcast
 import br.com.leandro.podcast.utils.htmlTextToString
 import com.squareup.picasso.Picasso
 
+/**
+ * DetailsFragment.
+ *
+ * Fragment responsible for displaying the details of the podcast.
+ */
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null

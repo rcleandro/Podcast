@@ -16,6 +16,11 @@ import br.com.leandro.podcast.repository.RssRepositoryImpl
 import br.com.leandro.podcast.utils.toRssUrl
 import kotlinx.coroutines.launch
 
+/**
+ * HomeViewModel.
+ *
+ * ViewModel responsible for the HomeFragment.
+ */
 class HomeViewModel(
     private val getHistoriesUseCase: GetHistoriesUseCase
 ) : ViewModel() {

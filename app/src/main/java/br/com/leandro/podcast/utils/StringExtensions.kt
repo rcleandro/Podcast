@@ -27,10 +27,20 @@ fun String.toRssUrl(): String {
     return result
 }
 
+/**
+ * Convert a HTML text to a String.
+ *
+ * @return a String.
+ */
 fun String.htmlTextToString(): String {
     return Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT).toString()
 }
 
+/**
+ * Convert a String to a date.
+ *
+ * @return a date.
+ */
 fun String.toDateString(): String {
     val formatCurrent = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     val formatDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

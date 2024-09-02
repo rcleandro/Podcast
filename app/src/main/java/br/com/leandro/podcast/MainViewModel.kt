@@ -6,6 +6,11 @@ import androidx.lifecycle.ViewModel
 import br.com.leandro.podcast.model.Feed
 import br.com.leandro.podcast.model.Podcast
 
+/**
+ * MainViewModel.
+ *
+ * ViewModel responsible for sharing data between fragments.
+ */
 class MainViewModel: ViewModel() {
     private val _feed = MutableLiveData<Feed>()
     val feed: LiveData<Feed> = _feed

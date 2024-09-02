@@ -29,6 +29,11 @@ import br.com.leandro.podcast.model.Podcast
 import br.com.leandro.podcast.utils.hideKeyboard
 import java.io.File
 
+/**
+ * HomeFragment.
+ *
+ * Fragment responsible for displaying the home screen.
+ */
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null

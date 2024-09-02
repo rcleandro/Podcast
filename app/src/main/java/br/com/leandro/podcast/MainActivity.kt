@@ -10,6 +10,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.leandro.podcast.databinding.ActivityMainBinding
 
+/**
+ * MainActivity.
+ *
+ * Main activity responsible for displaying the application.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

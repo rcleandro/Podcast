@@ -24,6 +24,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * PlayerFragment.
+ *
+ * Fragment responsible for playing the podcast episode.
+ */
 class PlayerFragment : Fragment(), Player.Listener {
 
     private var _binding: FragmentPlayerBinding? = null
@@ -73,6 +78,11 @@ class PlayerFragment : Fragment(), Player.Listener {
         }
     }
 
+    /**
+     * Initialize Player.
+     *
+     * Load the episode and set the listeners.
+     */
     private fun initializePlayer() {
         val podcast = mainViewModel.podcast.value ?: mainViewModel.podcastList.value?.get(0) ?: return
         loadEpisode(podcast.enclosure.link)
@@ -163,6 +173,11 @@ class PlayerFragment : Fragment(), Player.Listener {
         })
     }
 
+    /**
+     * Load the episode.
+     *
+     * @param url Episode URL.
+     */
     private fun loadEpisode(url: String) {
         val mediaItem = MediaItem.fromUri(url)
         exoPlayer.setMediaItem(mediaItem, mainViewModel.mediaCurrentPosition.value ?: 0)
@@ -171,6 +186,9 @@ class PlayerFragment : Fragment(), Player.Listener {
         exoPlayer.play()
     }
 
+    /**
+     * Start the progress bar updater.
+     */
     private fun startProgressBarUpdater() {
         progressUpdateJob?.cancel()
         progressUpdateJob = lifecycleScope.launch {

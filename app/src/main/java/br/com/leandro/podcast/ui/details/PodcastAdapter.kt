@@ -13,6 +13,12 @@ import br.com.leandro.podcast.utils.toDateString
 import br.com.leandro.podcast.utils.toDurationTime
 import com.squareup.picasso.Picasso
 
+/**
+ * PodcastAdapter.
+ *
+ * Adapter responsible for displaying the podcast list.
+ * @param onItemClicked Listener for item click.
+ */
 class PodcastAdapter(
     private val onItemClicked: (Podcast) -> Unit,
 ) : RecyclerView.Adapter<PodcastAdapter.ViewHolder>() {
